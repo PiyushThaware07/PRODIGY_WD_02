@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css' rel='stylesheet'
+        integrity='sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9' crossorigin='anonymous'>
+    <script src="https://kit.fontawesome.com/4d9f707396.js" crossorigin="anonymous"></script>
+
+    <title>Stop Watch</title>
+</head>
+
+<body>
+    <div class="container-fluid p-5" style="height: 100vh;width: 100vw; background: #101316;">
+        <div class="container bg-dark h-100 w-100 d-flex align-items-center justify-content-center">
+            <div class="">
+                <h1 class="text-light text-center fw-bolder d-block" id="displayTime"
+                    style="letter-spacing: 4px;font-size: 3rem;">
+                    00:00:00</h1>
+                <div class="text-center mt-5">
+                    <button class="btn border-0" style="height: 45px;width: 45px;border-radius: 100%;background: white;"
+                        onclick="watchStop()"><i class="fas fa-square"></i></button>
+                    <button class="btn border-0 mx-3"
+                        style="height: 50px;width: 50px;border-radius: 100%;background: red;" onclick="watchStart()"><i
+                            class="fas fa-play"></i></button>
+                    <button class="btn border-0" style="height: 45px;width: 45px;border-radius: 100%;background: white;"
+                        onclick="watchReset()"><i class="fa-solid fa-rotate-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+<script>
+    let [seconds, minutes, hours] = [0, 0, 0];
+    let displayTime = document.getElementById("displayTime");
+    let timer = null;
+
+    function stopWatch() {
+        seconds++;
+        if (seconds == 60) {
+            seconds = 0;
+            minutes++;
+            if (minutes == 60) {
+                minutes = 0;
+                hours++;
+            }
+        }
+        let h = hours < 10 ? "0" + hours : hours;
+        let m = minutes < 10 ? "0" + minutes : minutes;
+        let s = seconds < 10 ? "0" + seconds : seconds;
+        displayTime.innerHTML = h + ":" + m + ":" + s;
+    }
+
+    function watchStart() {
+        if (timer !== null) {
+            clearInterval(timer);
+        }
+        timer = setInterval(stopWatch, 1000);
+    }
+
+    function watchStop() {
+        clearInterval(timer);
+    }
+    function watchReset() {
+        clearInterval(timer);
+        [seconds, minutes, hours] = [0, 0, 0];
+        displayTime.innerHTML = "00:00:00";
+    }
+</script>
+
+
+<script src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js'
+    integrity='sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm'
+    crossorigin='anonymous'></script>
+
+</html>
